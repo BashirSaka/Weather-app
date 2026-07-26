@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@keyframes rain-fall {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0.3;
+  }
+}
+.animate-rain-fall {
+  animation: rain-fall linear infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(20px);
+    opacity: 0.6;
+  }
+}
+.animate-snow-fall {
+  animation: snow-fall linear infinite;
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translateX(-20vw);
+  }
+  100% {
+    transform: translateX(120vw);
+  }
+}
+.animate-cloud-drift {
+  animation: cloud-drift linear infinite;
+}
+
+@keyframes sun-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.9;
+  }
+}
+.animate-sun-pulse {
+  animation: sun-pulse ease-in-out infinite;
+  animation-duration: 3s;
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-star-twinkle {
+  animation: star-twinkle ease-in-out infinite;
+}
+
+@keyframes lightning-flash {
+  0%,
+  92%,
+  100% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  93% {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  94% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  96% {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+  97% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+.animate-lightning-flash {
+  animation: lightning-flash 6s ease-in-out infinite;
+}
+/* Hide scrollbar visually, but keep scrolling functional */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
