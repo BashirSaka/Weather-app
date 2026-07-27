@@ -18,8 +18,8 @@ export default function FavoritesModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-sm mx-4 p-4 rounded-2xl bg-slate-900/90 backdrop-blur-xl border border-white/20 shadow-xl">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
+      <div className="w-full max-w-sm my-4 p-4 rounded-2xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-300/50 dark:border-white/20 shadow-xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold text-white">Favorite Cities</h3>

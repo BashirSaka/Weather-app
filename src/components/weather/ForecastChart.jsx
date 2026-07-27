@@ -3,10 +3,10 @@ import { useState } from "react";
 export default function ForecastChart({ data, selectedIndex, onHourSelect }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const width = 700;
-  const height = 200;
-  const paddingX = 40;
-  const paddingY = 50;
+  const width = 500;
+  const height = 140;
+  const paddingX = 30;
+  const paddingY = 32;
 
   const temps = data.map((d) => d.temp);
   const maxTemp = Math.max(...temps);
@@ -32,8 +32,6 @@ export default function ForecastChart({ data, selectedIndex, onHourSelect }) {
   const activeIndex = hoveredIndex ?? selectedIndex;
   const activePoint = activeIndex != null ? points[activeIndex] : null;
 
-  // Clamp horizontal tooltip position based on proximity to either edge,
-  // not just the absolute first/last index
   const getTooltipTransform = (point) => {
     const percentX = (point.x / width) * 100;
     const isNearLeftEdge = percentX < 12;
@@ -47,10 +45,10 @@ export default function ForecastChart({ data, selectedIndex, onHourSelect }) {
   };
 
   return (
-    <div className="w-full overflow-x-auto overflow-y-visible relative">
+    <div className="w-full min-w-0 overflow-x-auto overflow-y-visible relative">
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="w-full h-auto min-w-[500px]"
+        className="w-full h-auto min-w-[380px] max-w-[500px]"
         preserveAspectRatio="none"
       >
         <path
@@ -66,9 +64,9 @@ export default function ForecastChart({ data, selectedIndex, onHourSelect }) {
             <g key={i}>
               <text
                 x={point.x}
-                y={point.y - 16}
+                y={point.y - 12}
                 textAnchor="middle"
-                fontSize="14"
+                fontSize="11"
                 fontWeight={isActive ? "700" : "400"}
                 fill={isActive ? "#fbbf24" : "#e2e8f0"}
               >
@@ -77,9 +75,9 @@ export default function ForecastChart({ data, selectedIndex, onHourSelect }) {
 
               <text
                 x={point.x}
-                y={height - 10}
+                y={height - 8}
                 textAnchor="middle"
-                fontSize="11"
+                fontSize="9"
                 fill={isActive ? "#fbbf24" : "#94a3b8"}
               >
                 {point.time}
@@ -88,7 +86,7 @@ export default function ForecastChart({ data, selectedIndex, onHourSelect }) {
               <circle
                 cx={point.x}
                 cy={point.y}
-                r={14}
+                r={12}
                 fill="transparent"
                 style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHoveredIndex(i)}
@@ -99,7 +97,7 @@ export default function ForecastChart({ data, selectedIndex, onHourSelect }) {
               <circle
                 cx={point.x}
                 cy={point.y}
-                r={isActive ? 6 : 4}
+                r={isActive ? 5 : 3}
                 fill={isActive ? "#fbbf24" : "rgba(255,255,255,0.6)"}
                 style={{ pointerEvents: "none" }}
               />
@@ -108,10 +106,9 @@ export default function ForecastChart({ data, selectedIndex, onHourSelect }) {
         })}
       </svg>
 
-      {/* Tooltip on hover/select — renders below the point, clamped near edges */}
       {activePoint && (
         <div
-          className="absolute px-3 py-2 rounded-lg bg-slate-900/95 border border-white/20 text-xs text-white shadow-lg pointer-events-none z-10"
+          className="absolute px-2.5 py-1.5 rounded-lg bg-slate-900/95 border border-white/20 text-xs text-white shadow-lg pointer-events-none z-10"
           style={{
             left: `${(activePoint.x / width) * 100}%`,
             top: `${(activePoint.y / height) * 100}%`,

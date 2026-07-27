@@ -43,6 +43,7 @@ export default function App() {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isAddCityModalOpen, setIsAddCityModalOpen] = useState(false);
   const [isQuickSearchModalOpen, setIsQuickSearchModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [favorites, setFavorites] = useLocalStorage(
     "favoriteCities",
@@ -57,9 +58,6 @@ export default function App() {
     defaultRegionWeather,
   );
 
-  // Starts on a sensible default so there's no blank/loading state on first
-  // paint. Only swaps to the visitor's real location if they click "Allow"
-  // on the permission banner below.
   const [selectedCityName, setSelectedCityName] = useState(FALLBACK_CITY);
   const [showLocationBanner, setShowLocationBanner] = useState(true);
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
@@ -80,7 +78,6 @@ export default function App() {
 
   const handleDismissBanner = () => {
     setShowLocationBanner(false);
-    // stays on FALLBACK_CITY until the user searches/picks a city manually
   };
 
   const {
@@ -98,8 +95,6 @@ export default function App() {
   const [selectedHourData, setSelectedHourData] = useState(null);
   const [selectionContext, setSelectionContext] = useState(null);
 
-  // If nothing's been explicitly picked yet, fall back to "today"
-  // (the first date in the list) — computed during render, not via effect
   const effectiveSelectedDay = selectedDay ?? forecastDays[0]?.date ?? null;
 
   const isSelectionStale =
@@ -110,7 +105,6 @@ export default function App() {
   const effectiveHourIndex = isSelectionStale ? null : selectedHourIndex;
   const effectiveHourData = isSelectionStale ? null : selectedHourData;
 
-  // Theme
   useEffect(() => {
     const root = document.documentElement;
     const applyTheme = (isDark) => root.classList.toggle("dark", isDark);
@@ -230,7 +224,7 @@ export default function App() {
     };
 
   return (
-    <div className="relative w-full min-h-screen flex">
+    <div className="relative w-full min-h-screen flex overflow-x-hidden">
       <WeatherBackground
         condition={activeConditionSource.condition}
         isDay={activeConditionSource.isDay}
@@ -245,17 +239,17 @@ export default function App() {
         />
       )}
 
-      <div className="relative h-auto z-10">
-        <Sidebar
-          onLocationClick={() => setIsQuickSearchModalOpen(true)}
-          onWeatherClick={() => setIsAlertsModalOpen(true)}
-          onFavoritesClick={() => setIsFavoritesModalOpen(true)}
-          onSettingsClick={() => setIsSettingsModalOpen(true)}
-          onAboutClick={() => setIsAboutModalOpen(true)}
-        />
-      </div>
+      <Sidebar
+        onLocationClick={() => setIsQuickSearchModalOpen(true)}
+        onWeatherClick={() => setIsAlertsModalOpen(true)}
+        onFavoritesClick={() => setIsFavoritesModalOpen(true)}
+        onSettingsClick={() => setIsSettingsModalOpen(true)}
+        onAboutClick={() => setIsAboutModalOpen(true)}
+        isMobileOpen={isMobileMenuOpen}
+        onMobileClose={() => setIsMobileMenuOpen(false)}
+      />
 
-      <div className="relative z-10 flex-1 p-4 sm:p-6 lg:p-8 flex flex-col">
+      <div className="relative z-10 flex-1 min-w-0 p-4 sm:p-6 lg:p-8 flex flex-col">
         <Header
           onAddCityClick={() => setIsAddCityModalOpen(true)}
           onSearchClick={() => setIsQuickSearchModalOpen(true)}
@@ -266,10 +260,11 @@ export default function App() {
             setSettings((prev) => ({ ...prev, appearance: value }))
           }
           alerts={alerts}
+          onMenuClick={() => setIsMobileMenuOpen(true)}
         />
 
-        <div className="flex flex-col lg:flex-row gap-6 flex-1">
-          <div className="flex-1 flex flex-col justify-between gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 flex-1 min-w-0">
+          <div className="flex-1 flex flex-col justify-between gap-8 min-w-0">
             <WeatherHero
               tag="Weather Forecast"
               title={<>Weather Dashboard</>}
@@ -278,7 +273,7 @@ hourly predictions, and saved locations
 everything you need to plan your dayh."
             />
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 min-w-0">
               {isLoading || isDetectingLocation || !effectiveSelectedDay ? (
                 <ForecastChartSkeleton />
               ) : (
@@ -298,7 +293,7 @@ everything you need to plan your dayh."
             </div>
           </div>
 
-          <div className="w-full lg:w-72 flex flex-col gap-4">
+          <div className="w-full lg:w-72 flex flex-col gap-4 min-w-0">
             {isLoading || isDetectingLocation || !currentWeather ? (
               <CurrentWeatherCardSkeleton />
             ) : (
