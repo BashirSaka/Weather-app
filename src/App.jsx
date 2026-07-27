@@ -245,7 +245,7 @@ export default function App() {
         />
       )}
 
-      <div className="relative z-10 h-screen sticky top-0">
+      <div className="relative h-auto z-10">
         <Sidebar
           onLocationClick={() => setIsQuickSearchModalOpen(true)}
           onWeatherClick={() => setIsAlertsModalOpen(true)}

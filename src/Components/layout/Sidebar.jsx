@@ -45,13 +45,14 @@ export default function Sidebar({
   return (
     <aside
       className="
-        flex flex-col items-center justify-between
-        h-full py-6
-        w-16 sm:w-20
-        bg-white/60 dark:bg-white/5
-        border-r border-slate-300/40 dark:border-white/10
-        backdrop-blur-xl
-      "
+    sticky top-0
+    flex flex-col items-center justify-between
+    h-screen py-6
+    w-16 sm:w-20
+    bg-white/60 dark:bg-white/5
+    border-r border-slate-300/40 dark:border-white/10
+    backdrop-blur-xl
+  "
     >
       {/* Logo */}
       <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-amber-400/20 border border-amber-300/30">
