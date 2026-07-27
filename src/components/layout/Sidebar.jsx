@@ -55,13 +55,13 @@ export default function Sidebar({
 
       <aside
         className={`
-          fixed md:sticky top-0 left-0 z-50
+          fixed  md:sticky top-0 left-0 z-50
           flex flex-col items-center justify-between
-          h-auto py-6 gap-3 px-3
+          h-auto py-6 gap-8 px-3
           w-16 sm:w-20 md:w-16 lg:w-20
           bg-white/10 dark:bg-white/5
           border-r border-slate-300/30 dark:border-white/10
-          backdrop-blur-xl
+          backdrop-blur-xl 
           transition-transform duration-300
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
