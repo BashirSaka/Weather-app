@@ -224,7 +224,7 @@ export default function App() {
     };
 
   return (
-    <div className="relative w-full min-h-screen flex overflow-x-hidden">
+    <div className="relative z-10 flex-1 min-w-0 p-4 sm:p-6 lg:p-8 flex flex-col md:ml-16 lg:ml-20">
       <WeatherBackground
         condition={activeConditionSource.condition}
         isDay={activeConditionSource.isDay}
